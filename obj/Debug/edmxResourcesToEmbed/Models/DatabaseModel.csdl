@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Deadline">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Deadline1" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Submissions" Relationship="Self.Deadline1" FromRole="Deadlines" ToRole="Submissions" />
+  </EntityType>
+  <EntityType Name="ReviewPreference">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PCMId" Type="Int32" Nullable="false" />
+    <Property Name="SubmissionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Submission" Relationship="Self.RP_Submissions" FromRole="ReviewPreferences" ToRole="Submissions" />
+    <NavigationProperty Name="User" Relationship="Self.RP_Users" FromRole="ReviewPreferences" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubmissionId" Type="Int32" Nullable="false" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ReviewerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Submission" Relationship="Self.Reviews_Submissions" FromRole="Reviews" ToRole="Submissions" />
+    <NavigationProperty Name="User" Relationship="Self.Reviews_Users" FromRole="Reviews" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Submission">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubmitterId" Type="Int32" Nullable="false" />
+    <Property Name="FilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DeadlineId" Type="Int32" Nullable="false" />
+    <Property Name="Rating" Type="Double" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Deadline" Relationship="Self.Deadline1" FromRole="Submissions" ToRole="Deadlines" />
+    <NavigationProperty Name="ReviewPreferences" Relationship="Self.RP_Submissions" FromRole="Submissions" ToRole="ReviewPreferences" />
+    <NavigationProperty Name="Reviews" Relationship="Self.Reviews_Submissions" FromRole="Submissions" ToRole="Reviews" />
+    <NavigationProperty Name="User" Relationship="Self.Submitter" FromRole="Submissions" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="isPCM" Type="Boolean" Nullable="false" />
+    <Property Name="isPCC" Type="Boolean" Nullable="false" />
+    <Property Name="isAdmin" Type="Boolean" Nullable="false" />
+    <Property Name="canLogin" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ReviewPreferences" Relationship="Self.RP_Users" FromRole="Users" ToRole="ReviewPreferences" />
+    <NavigationProperty Name="Reviews" Relationship="Self.Reviews_Users" FromRole="Users" ToRole="Reviews" />
+    <NavigationProperty Name="Submissions" Relationship="Self.Submitter" FromRole="Users" ToRole="Submissions" />
+  </EntityType>
+  <Association Name="Deadline1">
+    <End Role="Deadlines" Type="Self.Deadline" Multiplicity="1" />
+    <End Role="Submissions" Type="Self.Submission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deadlines">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Submissions">
+        <PropertyRef Name="DeadlineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RP_Submissions">
+    <End Role="Submissions" Type="Self.Submission" Multiplicity="1" />
+    <End Role="ReviewPreferences" Type="Self.ReviewPreference" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submissions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReviewPreferences">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RP_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="ReviewPreferences" Type="Self.ReviewPreference" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReviewPreferences">
+        <PropertyRef Name="PCMId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Reviews_Submissions">
+    <End Role="Submissions" Type="Self.Submission" Multiplicity="1" />
+    <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submissions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Reviews">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Reviews_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Reviews">
+        <PropertyRef Name="ReviewerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Submitter">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Submissions" Type="Self.Submission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Submissions">
+        <PropertyRef Name="SubmitterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Deadlines" EntityType="Self.Deadline" />
+    <EntitySet Name="ReviewPreferences" EntityType="Self.ReviewPreference" />
+    <EntitySet Name="Reviews" EntityType="Self.Review" />
+    <EntitySet Name="Submissions" EntityType="Self.Submission" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="Deadline" Association="Self.Deadline1">
+      <End Role="Deadlines" EntitySet="Deadlines" />
+      <End Role="Submissions" EntitySet="Submissions" />
+    </AssociationSet>
+    <AssociationSet Name="RP_Submissions" Association="Self.RP_Submissions">
+      <End Role="Submissions" EntitySet="Submissions" />
+      <End Role="ReviewPreferences" EntitySet="ReviewPreferences" />
+    </AssociationSet>
+    <AssociationSet Name="RP_Users" Association="Self.RP_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ReviewPreferences" EntitySet="ReviewPreferences" />
+    </AssociationSet>
+    <AssociationSet Name="Reviews_Submissions" Association="Self.Reviews_Submissions">
+      <End Role="Submissions" EntitySet="Submissions" />
+      <End Role="Reviews" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="Reviews_Users" Association="Self.Reviews_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Reviews" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="Submitter" Association="Self.Submitter">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Submissions" EntitySet="Submissions" />
+    </AssociationSet>
+    <FunctionImport Name="RegisterUser">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

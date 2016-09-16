@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+    <EntitySetMapping Name="Deadlines">
+      <EntityTypeMapping TypeName="DatabaseModel.Deadline">
+        <MappingFragment StoreEntitySet="Deadlines">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Deadline1" ColumnName="Deadline" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReviewPreferences">
+      <EntityTypeMapping TypeName="DatabaseModel.ReviewPreference">
+        <MappingFragment StoreEntitySet="ReviewPreferences">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PCMId" ColumnName="PCMId" />
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reviews">
+      <EntityTypeMapping TypeName="DatabaseModel.Review">
+        <MappingFragment StoreEntitySet="Reviews">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="ReviewerId" ColumnName="ReviewerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Submissions">
+      <EntityTypeMapping TypeName="DatabaseModel.Submission">
+        <MappingFragment StoreEntitySet="Submissions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SubmitterId" ColumnName="SubmitterId" />
+          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+          <ScalarProperty Name="DeadlineId" ColumnName="DeadlineId" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="DatabaseModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="isPCM" ColumnName="isPCM" />
+          <ScalarProperty Name="isPCC" ColumnName="isPCC" />
+          <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+          <ScalarProperty Name="canLogin" ColumnName="canLogin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="RegisterUser" FunctionName="DatabaseModel.Store.RegisterUser" />
+  </EntityContainerMapping>
+</Mapping>

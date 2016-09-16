@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="718157eb18ac4e86917ae338424b2ee4" Name="Diagram1" ZoomLevel="109">
+        <EntityTypeShape EntityType="DatabaseModel.Deadline" Width="1.5" PointX="3.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.ReviewPreference" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Review" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Submission" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.User" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="DatabaseModel.Deadline1" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.RP_Submissions" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.RP_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.Reviews_Submissions" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.Reviews_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.Submitter" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
